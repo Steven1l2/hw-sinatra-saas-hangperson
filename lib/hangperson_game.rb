@@ -12,13 +12,12 @@ class HangpersonGame
   attr_accessor :wrong_guesses
   attr_accessor :guesses
   attr_accessor :word_with_guesses
+  attr_accessor :check_win_or_lose
   
-  @@correct_guess = Array.new
-  @@repeat_array = Array.new
-  @@wrong_guess_list = Array.new
-  @@guess_hash = Hash.new
-  @@game_check_win_or_lose = ""
-  @@guess_array = Array.new
+  #@@correct_guess = Array.new
+  #@@repeat_array = Array.new
+  #@@wrong_guess_list = Array.new
+  #@@guess_hash = Hash.new
   
   
   
@@ -27,6 +26,11 @@ class HangpersonGame
     @wrong_guesses = ''
     @guesses = ''
     @word_with_guesses = ''
+    @guess_array = Array.new
+    @check_win_or_lose = :play
+    @number_of_guesses = 0
+    @number_of_correct_guesses = 0
+    @number_of_incorrect_guesses = 0
   end
 
   def self.get_random_word
@@ -39,7 +43,7 @@ class HangpersonGame
   def guess(letter)
 
     
-    
+    correct_chars = 0
     
     if((letter == nil) || (letter == '') || !(letter =~ /[A-Za-z]/))
      raise ArgumentError.new("Incorrect input")
@@ -60,15 +64,21 @@ class HangpersonGame
        else
            @wrong_guesses = letter
            @prev_wrong_guess = letter
+           @number_of_incorrect_guesses = @number_of_incorrect_guesses + 1
+           
+          if @number_of_incorrect_guesses == 7
+              @check_win_or_lose = :lose
+              
+          end      
        end
            
            
        length = @word.length
        length = length - 1 
 
-       @@guess_array.push(guesses)
+       @guess_array.push(guesses)
 
-       guess_array_length = @@guess_array.length
+       guess_array_length = @guess_array.length
 
        guess_array_length = guess_array_length -1
 
@@ -81,40 +91,50 @@ class HangpersonGame
       for i in 0..guess_array_length
         for j in 0..length
         
-        if(@word[j] == @@guess_array[i]    )
-           @word_with_guesses[j] = @@guess_array[i]
+        if(@word[j] == @guess_array[i]    )
+           @word_with_guesses[j] = @guess_array[i]
         end
       end
      end
+     
+     for j in 0..length
+       if @word_with_guesses[j] =~ /[a-z] /
+         correct_chars = correct_chars + 1
+        end
+     end
+     
+     if correct_chars == @word.length
+        @check_win_or_lose = :win
+        return @check_win_or_lose
+     end
+     
+     if @number_of_incorrect_guesses > 6
+        @check_win_or_lose = :lose
+        return @check_win_or_lose
+     end
+     
+      @check_win_or_lose = :play
+      return @check_win_or_lose
+     
+        
+            
+     
+        
+     
+     
+           
+          
            
            
-           
-           
-           
-           
-           
-           
-           
-           
-       return true
+    return true
       
            
- end #end of if(letter =~ /[a-z]/)
-
-##################################################
+  end #end of if(letter =~ /[a-z]/)
 
 
-     
+ end #end of method guess
 
-
-##################################################
-     
-    
-    
-    
-end #end of method guess
-
-  
+   
 
 
 
