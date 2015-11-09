@@ -12,7 +12,7 @@ class HangpersonGame
   attr_accessor :wrong_guesses
   attr_accessor :guesses
   attr_accessor :word_with_guesses
-  attr_accessor :check_win_or_lose
+  #attr_accessor :check_win_or_lose
   
   #@@correct_guess = Array.new
   #@@repeat_array = Array.new
@@ -28,7 +28,7 @@ class HangpersonGame
     @word_with_guesses = ''
     @word_with_guesses_temp = ''
     @guess_array = Array.new
-    @check_win_or_lose = :play 
+   # @check_win_or_lose = :play 
     @number_of_guesses = 0
     @number_of_correct_guesses = 0
     @number_of_incorrect_guesses = 0
@@ -45,7 +45,9 @@ class HangpersonGame
   end
 
   def guess(letter)
-
+  
+    value = false
+  
     #correct_chars = 0
     
     #word_length = @word.length
@@ -63,7 +65,17 @@ class HangpersonGame
        end
         
         
-       if(letter =~ /[#{@word}]/)
+       @word.each_char do |x|
+         if letter == x
+            value = true
+          end
+       end
+        
+        
+       #if(letter =~ /[#{@word}]/)
+       
+        if(value == true) 
+        
            @guesses = letter
            @prev_correct_guess = letter
        else
