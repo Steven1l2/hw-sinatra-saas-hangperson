@@ -31,7 +31,7 @@ class HangpersonGame
     @number_of_guesses = 0
     @number_of_correct_guesses = 0
     @number_of_incorrect_guesses = 0
-    #@correct_chars = 0
+    @correct_chars = 0
   end
 
   def self.get_random_word
@@ -43,9 +43,8 @@ class HangpersonGame
 
   def guess(letter)
 
-    correct_chars = 0
     
-    #word_length = @word.length
+    word_length = @word.length
     
     if((letter == nil) || (letter == '') || !(letter =~ /[A-Za-z]/))
      raise ArgumentError.new("Incorrect input")
@@ -68,11 +67,11 @@ class HangpersonGame
            @prev_wrong_guess = letter
            @number_of_incorrect_guesses = @number_of_incorrect_guesses + 1
            
-     #     if @number_of_incorrect_guesses == 7
+          if @number_of_incorrect_guesses == 7
           
-      #       @check_win_or_lose = :lose
-       #     return @check_win_or_lose 
-        #  end      
+             @check_win_or_lose = :lose
+            return @check_win_or_lose 
+          end      
        end
            
            
@@ -92,50 +91,54 @@ class HangpersonGame
       end
 
       for i in 0..guess_array_length
-      
         for j in 0..length
         
         if(@word[j] == @guess_array[i]    )
            @word_with_guesses[j] = @guess_array[i]
-           correct_chars = correct_chars + 1
         end
       end
      end
      
-     #@correct_chars = 0
+     @correct_chars = 0
      
      
-     #for j in 0..length
-      # if @word_with_guesses[j] =~ /[a-z] /
-       #   correct_chars = correct_chars + 1
-        #end
-     #end
-     
-     
-     
-     
-     if correct_chars == @word.length
-        @check_win_or_lose = :win
-        return @check_win_or_lose
+     for j in 0..length
+       if @word_with_guesses[j] =~ /[a-z] /
+         @correct_chars = @correct_chars + 1
+        end
      end
      
-     #  @check_win_or_lose = :play
-      # return @check_win_or_lose
-     #end
+     
+     if(@words_with_guesses == "dog") 
+        puts  @correct_chars
+        puts  word_length
+     
+    else
+        puts "It never equaled dog"
+    end     
+     
+     
+     
+     
+     if @correct_chars == word_length
+        @check_win_or_lose = :win
+        return @check_win_or_lose
+     else
+       @check_win_or_lose = :play
+       return @check_win_or_lose
+     end
      
      if @number_of_incorrect_guesses > 6
        @check_win_or_lose = :lose
        return @check_win_or_lose
      end
      
-     #if(@number_of_incorrect_guesses < 6 )#&& correct_chars < @word.length )
+     if(@number_of_incorrect_guesses < 7 && @correct_chars < @word.length )
      
-      #   @check_win_or_lose = :lose
-       #  return @check_win_or_lose
-     #end
+         @check_win_or_lose = :play
+         return @check_win_or_lose
+     end
      
-     @check_win_or_lose = :play
-     return @check_win_or_lose
     
         
     
