@@ -26,15 +26,12 @@ class HangpersonGame
     @wrong_guesses = ''
     @guesses = ''
     @word_with_guesses = ''
-    @word_with_guesses_temp = ''
     @guess_array = Array.new
     @check_win_or_lose = :play 
     @number_of_guesses = 0
     @number_of_correct_guesses = 0
     @number_of_incorrect_guesses = 0
-    @correct_chars = 0
-    @length = 0
-    @guess_array_length = 0
+    #@correct_chars = 0
   end
 
   def self.get_random_word
@@ -46,7 +43,7 @@ class HangpersonGame
 
   def guess(letter)
 
-    #correct_chars = 0
+    correct_chars = 0
     
     #word_length = @word.length
     
@@ -79,50 +76,31 @@ class HangpersonGame
        end
            
            
-       #@length = @word.length
-       #@length = @length - 1 
+       length = @word.length
+       length = length - 1 
 
        @guess_array.push(guesses)
 
-       #@guess_array_length = @guess_array.length
+       guess_array_length = @guess_array.length
 
-       #@guess_array_length = @guess_array_length -1
+      guess_array_length = guess_array_length -1
 
-       return true
-       
-    end
-    
-  end
-   
-   def word_with_guesses
-    
-      @length = @word.length
-      @length = @length - 1 
-    
-      @guess_array_length = @guess_array.length
+ 
 
-      @guess_array_length = @guess_array_length -1
-    
-      
-      for i in 0..@length
-         @word_with_guesses_temp[i] = '-'
+      for i in 0..length
+         @word_with_guesses[i] = '-'
       end
 
-      for i in 0..@guess_array_length
+      for i in 0..guess_array_length
       
-        for j in 0..@length
+        for j in 0..length
         
         if(@word[j] == @guess_array[i]    )
-           @word_with_guesses_temp[j] = @guess_array[i]
-           @correct_chars = @correct_chars + 1
+           @word_with_guesses[j] = @guess_array[i]
+           correct_chars = correct_chars + 1
         end
       end
      end
-     
-     
-     return @word_with_guesses_temp
-     
-   end # end of word with guesses
      
      #@correct_chars = 0
      
@@ -134,45 +112,21 @@ class HangpersonGame
      #end
      
      
-     def check_win_or_lose
      
      
-      @length = @word.length
-      @length = @length - 1 
-    
-      @guess_array_length = @guess_array.length
-
-      @guess_array_length = @guess_array_length -1
-    
-      
-      for i in 0..@length
-         @word_with_guesses_temp[i] = '-'
-      end
-
-      for i in 0..@guess_array_length
-      
-        for j in 0..@length
-        
-        if(@word[j] == @guess_array[i]    )
-           @word_with_guesses_temp[j] = @guess_array[i]
-           @correct_chars = @correct_chars + 1
-        end
-      end
+     if correct_chars == @word.length
+        @check_win_or_lose = :win
+        return @check_win_or_lose
      end
-     
-     if @correct_chars == @word.length
-          #@check_win_or_lose = :win
-          return :win #@check_win_or_lose
-       end
      
      #  @check_win_or_lose = :play
       # return @check_win_or_lose
      #end
      
-      if  @number_of_incorrect_guesses > 6
-          #@check_win_or_lose = :lose
-          return :lose #@check_win_or_lose
-       end
+     if @number_of_incorrect_guesses > 6
+       @check_win_or_lose = :lose
+       return @check_win_or_lose
+     end
      
      #if(@number_of_incorrect_guesses < 6 )#&& correct_chars < @word.length )
      
@@ -180,23 +134,23 @@ class HangpersonGame
        #  return @check_win_or_lose
      #end
      
-    # @check_win_or_lose = :play
-     return :play  #@check_win_or_lose
+     @check_win_or_lose = :play
+     return @check_win_or_lose
     
-    end      
+        
     
            
-    #return true
+    return true
       
            
-  #end #end of if(letter =~ /[a-z]/)
+  end #end of if(letter =~ /[a-z]/)
 
 
 
   #@check_win_or_lose = check_win_or_lose
   #return @check_win_or_lose
 
- #end #end of method guess
+ end #end of method guess
  
  
  #def check_win_or_lose
