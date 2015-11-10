@@ -52,7 +52,7 @@ class HangpersonGame
     
     #word_length = @word.length
     
-    if((letter == nil) || (letter == '') || !(letter =~ /[A-Za-z]/))
+    if((letter == nil) || (letter == '') || (letter !~ /[A-Za-z]/))
      raise ArgumentError.new("Incorrect input")
     end
 
